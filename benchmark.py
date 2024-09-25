@@ -37,6 +37,8 @@ def plot(n: int) -> None:
 
     ratios = []
 
+    print(f"number of iterations: {n:,}")
+
     for name, expr in test_cases.items():
         print(name)
         t1 = timeit_func(literal_eval, expr, n)

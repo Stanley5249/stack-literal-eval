@@ -1,3 +1,4 @@
+number of iterations: 300,000
 constant
 - literal_eval        : 0.6472s
 - stack_literal_eval  : 0.5110s
