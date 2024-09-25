@@ -28,7 +28,7 @@ To run the benchmark, use the following command:
 python benchmark.py
 ```
 
-Below are the benchmark results comparing `ast.literal_eval` and `stack_literal_eval`, conducted on an Intel(R) Core(TM) Ultra 9 185H.
+Below are the benchmark results comparing `ast.literal_eval` and `stack_literal_eval`, conducted on an Intel(R) Core(TM) Ultra 9 185H using Python 3.12.6 release.
 
 ![benchmark](resource/benchmark.png)
 
