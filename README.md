@@ -30,6 +30,6 @@ python benchmark.py
 
 Below are the benchmark results comparing `ast.literal_eval` and `stack_literal_eval`, conducted on an Intel(R) Core(TM) Ultra 9 185H using Python 3.12.6 release.
 
-![benchmark](resource/benchmark.png)
+![benchmark](resources/benchmark.png)
 
-For detailed timings, refer to the [benchmark results](resource/benchmark.txt).
+For detailed timings, refer to the [benchmark results](resources/benchmark.txt).
