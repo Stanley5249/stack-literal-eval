@@ -17,7 +17,7 @@ Related to a closed issue [#75934](https://github.com/python/cpython/issues/7593
 The tests are copied from the CPython main branch, retaining only those related to `ast.literal_eval`. To run the tests, use the following command:
 
 ```sh
-python -m unittest test_main.py
+pytest
 ```
 
 ## Benchmark Results
