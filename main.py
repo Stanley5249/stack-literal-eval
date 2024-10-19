@@ -5,6 +5,7 @@ from ast import (
     Call,
     Constant,
     Dict,
+    Expression,
     List,
     Name,
     Set,
@@ -73,6 +74,8 @@ def convert(node: AST) -> Any:
 def stack_literal_eval(node_or_string: str | AST) -> Any:
     if isinstance(node_or_string, str):
         node = parse(node_or_string.lstrip(" \t"), mode="eval").body
+    elif isinstance(node_or_string, Expression):
+        node = node_or_string.body
     else:
         node = node_or_string
 
