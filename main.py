@@ -19,118 +19,54 @@ from typing import Any
 
 
 def convert(node: AST) -> Any:
-    node_stack: list[tuple[AST, bool]] = [(node, True)]
-    value_stack: list[Any] = []
-
-    while node_stack:
-        node, not_visited = node_stack.pop()
-        if isinstance(node, Constant):
-            value_stack.append(node.value)
-        elif isinstance(node, Tuple):
-            if not_visited:
-                node_stack.append((node, False))
-                for elt in node.elts:
-                    node_stack.append((elt, True))
-            else:
-                value_stack.append((*[value_stack.pop() for _ in node.elts],))
-        elif isinstance(node, List):
-            if not_visited:
-                node_stack.append((node, False))
-                for elt in node.elts:
-                    node_stack.append((elt, True))
-            else:
-                value_stack.append([value_stack.pop() for _ in node.elts])
-        elif isinstance(node, Set):
-            if not_visited:
-                node_stack.append((node, False))
-                for elt in node.elts:
-                    node_stack.append((elt, True))
-            else:
-                value_stack.append({value_stack.pop() for _ in node.elts})
-        elif isinstance(node, Call):
-            func = node.func
-            if (
-                isinstance(func, Name)
-                and func.id == "set"
-                and not (node.args or node.keywords)
-            ):
-                value_stack.append(set())
-            else:
-                break
-        elif isinstance(node, Dict):
-            if not_visited:
-                node_stack.append((node, False))
-                keys = node.keys
-                values = node.values
-                if len(keys) != len(values) or None in keys:
-                    break
-                for key in keys:
-                    node_stack.append((key, True))  # type: ignore
-                for value in values:
-                    node_stack.append((value, True))
-            else:
-                items = zip(
-                    [value_stack.pop() for _ in node.keys],
-                    [value_stack.pop() for _ in node.values],
-                )
-                value_stack.append(dict(items))
-        elif isinstance(node, BinOp):
-            if not_visited:
-                left = node.left
-                right = node.right
-                if not (
-                    isinstance(left, (Constant, UnaryOp))
-                    and isinstance(right, (Constant))
-                ):
-                    break
-                node_stack.append((node, False))
-                node_stack.append((left, True))
-                node_stack.append((right, True))
-            else:
-                real = value_stack.pop()
-                if not isinstance(real, (int, float)):
-                    break
-                imag = value_stack.pop()
-                if not isinstance(imag, complex):
-                    break
+    if isinstance(node, Constant):
+        return node.value
+    elif isinstance(node, Tuple):
+        return (*[convert(elt) for elt in node.elts],)
+    elif isinstance(node, List):
+        return [convert(elt) for elt in node.elts]
+    elif isinstance(node, Set):
+        return {convert(elt) for elt in node.elts}
+    elif isinstance(node, Call):
+        func = node.func
+        if (
+            isinstance(func, Name)
+            and func.id == "set"
+            and not (node.args or node.keywords)
+        ):
+            return set()
+    elif isinstance(node, Dict):
+        if len(node.keys) == len(node.values) and None not in node.keys:
+            return {
+                convert(k):  # type: ignore
+                convert(v)
+                for k, v in zip(node.keys, node.values)
+            }
+    elif isinstance(node, BinOp):
+        left = node.left
+        right = node.right
+        if isinstance(left, (Constant, UnaryOp)) and isinstance(right, Constant):
+            real = convert(left)
+            imag = convert(right)
+            if type(real) in [int, float] and type(imag) is complex:
                 op = node.op
                 if isinstance(op, Add):
-                    value_stack.append(real + imag)
+                    return real + imag
                 elif isinstance(op, Sub):
-                    value_stack.append(real - imag)
-                else:
-                    break
-        elif isinstance(node, UnaryOp):
-            if not_visited:
-                operand = node.operand
-                if not isinstance(operand, Constant):
-                    break
-                node_stack.append((node, False))
-                node_stack.append((operand, True))
-            else:
-                operand = value_stack.pop()
-                if isinstance(operand, bool) or not isinstance(
-                    operand, (int, float, complex)
-                ):
-                    break
+                    return real - imag
+    elif isinstance(node, UnaryOp):
+        operand = node.operand
+        if isinstance(operand, Constant):
+            operand = convert(operand)
+            if type(operand) in [int, float, complex]:
                 op = node.op
                 if isinstance(op, UAdd):
-                    value_stack.append(operand)
+                    return operand
                 elif isinstance(op, USub):
-                    value_stack.append(-operand)
-                else:
-                    break
-        else:
-            break
-    else:
-        assert len(value_stack) == 1, value_stack
-        return value_stack.pop()
-
+                    return -operand
     lno = getattr(node, "lineno", None)
-
     if lno is None:
         raise ValueError("malformed node or string:")
-
     raise ValueError(f"malformed node or string on line {lno}:")
 
 

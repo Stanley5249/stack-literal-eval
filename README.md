@@ -22,14 +22,27 @@ pytest
 
 ## Benchmark Results
 
-To run the benchmark, use the following command:
-
-```sh
-python benchmark.py
-```
-
 Below are the benchmark results comparing `ast.literal_eval` and `stack_literal_eval`, conducted on an Intel(R) Core(TM) Ultra 9 185H using Python 3.12.6 release.
 
-![benchmark](resources/benchmark.png)
+### timeit
+
+To run the benchmark with simple `timeit`, use the following command:
+
+```sh
+./timeit_benchmark.sh
+```
+
+![Benchmark Results](resources/benchmark.png)
 
 For detailed timings, refer to the [benchmark results](resources/benchmark.txt).
+
+
+### pyperf
+
+To run the benchmark with  `pyperf`, use the following command:
+
+```sh
+./pyperf_benchmark.sh
+```
+
+For the comparison results, refer to [compare_to.txt](resources/compare_to.txt).

@@ -35,6 +35,9 @@ def timeit_func(f: Callable[[str], Any], x: str, n: int) -> float:
 def plot(n: int) -> None:
     import matplotlib.pyplot as plt
 
+    fig = plt.figure(figsize=(12, 6), layout="tight")
+    ax = fig.add_subplot(111)
+
     ratios = []
 
     print(f"number of iterations: {n:,}")
@@ -47,13 +50,13 @@ def plot(n: int) -> None:
         print(f"- {r:.2%}")
         ratios.append(r)
 
-    plt.bar([*test_cases], ratios)
-    plt.xlabel("test cases")
-    plt.ylabel("time ratio ((a - b) / a)")
-    plt.title("literal_eval (a) vs stack_literal_eval (b)")
-    plt.xticks(rotation=45, ha="right")
-
-    plt.show()
+    xlabels = [*test_cases]
+    ax.bar(xlabels, ratios)
+    ax.set_xlabel("test cases")
+    ax.set_ylabel("time ratio")
+    ax.set_title("literal_eval vs stack_literal_eval")
+    ax.tick_params(axis="x", rotation=45)
+    fig.savefig("resources/benchmark.png")
 
 
 if __name__ == "__main__":
@@ -64,7 +67,7 @@ if __name__ == "__main__":
         "-n",
         "--number",
         type=int,
-        default=300000,
+        default=100000,
         help="Number of iterations for benchmarking",
     )
     args = parser.parse_args()

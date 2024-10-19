@@ -1,49 +1,49 @@
-number of iterations: 300,000
+number of iterations: 100,000
 constant
-- literal_eval        : 0.6472s
-- stack_literal_eval  : 0.5110s
-- 21.05%
+- literal_eval        : 0.3804s
+- stack_literal_eval  : 0.1671s
+- 56.06%
 unary
-- literal_eval        : 0.9172s
-- stack_literal_eval  : 0.8629s
-- 5.92%
+- literal_eval        : 0.4159s
+- stack_literal_eval  : 0.2496s
+- 40.00%
 complex
-- literal_eval        : 1.1793s
-- stack_literal_eval  : 1.1053s
-- 6.28%
+- literal_eval        : 0.4785s
+- stack_literal_eval  : 0.3157s
+- 34.02%
 empty_tuple
-- literal_eval        : 0.8489s
-- stack_literal_eval  : 0.7410s
-- 12.71%
+- literal_eval        : 0.3560s
+- stack_literal_eval  : 0.2157s
+- 39.42%
 empty_list
-- literal_eval        : 0.8820s
-- stack_literal_eval  : 0.7467s
-- 15.34%
+- literal_eval        : 0.3567s
+- stack_literal_eval  : 0.2171s
+- 39.14%
 empty_set
-- literal_eval        : 1.0023s
-- stack_literal_eval  : 0.8704s
-- 13.16%
+- literal_eval        : 0.4668s
+- stack_literal_eval  : 0.2818s
+- 39.64%
 empty_dict
-- literal_eval        : 0.9569s
-- stack_literal_eval  : 0.8839s
-- 7.63%
+- literal_eval        : 0.3831s
+- stack_literal_eval  : 0.2673s
+- 30.23%
 tuple
-- literal_eval        : 3.6343s
-- stack_literal_eval  : 3.7676s
-- -3.67%
+- literal_eval        : 1.3548s
+- stack_literal_eval  : 1.1826s
+- 12.71%
 list
-- literal_eval        : 3.5887s
-- stack_literal_eval  : 3.7088s
-- -3.35%
+- literal_eval        : 1.2549s
+- stack_literal_eval  : 1.1560s
+- 7.88%
 set
-- literal_eval        : 3.6873s
-- stack_literal_eval  : 3.6768s
-- 0.28%
+- literal_eval        : 1.2597s
+- stack_literal_eval  : 1.1570s
+- 8.15%
 dict
-- literal_eval        : 6.6168s
-- stack_literal_eval  : 6.8031s
-- -2.82%
+- literal_eval        : 2.2302s
+- stack_literal_eval  : 2.1177s
+- 5.05%
 nested
-- literal_eval        : 20.8862s
-- stack_literal_eval  : 22.2229s
-- -6.40%
+- literal_eval        : 7.1635s
+- stack_literal_eval  : 6.6566s
+- 7.08%

@@ -1,0 +1,1 @@
+python benchmark.py > resources/benchmark.txt
